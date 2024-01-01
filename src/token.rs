@@ -31,8 +31,16 @@ impl Operator {
     }
 
     pub fn try_from_char(c: char) -> Option<Operator> {
-        Some(
-            
+            Some(match c {
+                '+' => Operator::PLUS,
+                '-' => Operator::MINUS,
+                '*' => Operator::MULTI,
+                '/' => Operator::DIVIDE,
+                '^' => Operator::POWER,
+                '(' => Operator::LPAREN,
+                ')' => Operator::RPAREN,
+                _ => return None,
+            }
         )
     }
 }
