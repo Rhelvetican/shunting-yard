@@ -15,3 +15,7 @@ num = "*"
 doc = false
 name = "shunting-yard"
 path = "src/bin/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
