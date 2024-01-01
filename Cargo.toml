@@ -9,3 +9,9 @@ description = "A simple shunting yard algorithm implementation in Rust"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+num = "*"
+
+[[bin]]
+doc = false
+name = "shunting-yard"
+path = "src/bin/main.rs"
