@@ -1,6 +1,6 @@
+use crate::token::{Operator, RPNToken};
 use num::Num;
 use std::str::FromStr;
-use crate::token::{RPNToken, Operator};
 
 pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken<T>>, String> {
     let tokens = code.chars().filter(|c| !c.is_whitespace());
@@ -23,18 +23,18 @@ pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken
             if !num.is_empty() {
                 let n = match num.parse::<T>() {
                     Ok(n) => n,
-                    Err(_) => return Err(String::from("Failed to parse number"))
+                    Err(_) => return Err(String::from("Failed to parse number")),
                 };
                 let rpnt = RPNToken::Operand(n);
                 output.push(rpnt);
                 num.clear();
-                };
-            
+            };
+
             match Operator::try_from_char(tok) {
                 Some(Operator::LPAREN) => {
                     stack.push(Operator::LPAREN);
                     neg = true;
-                },
+                }
                 Some(Operator::RPAREN) => {
                     while let Some(op) = stack.pop() {
                         if op == Operator::LPAREN {
@@ -43,7 +43,7 @@ pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken
                         output.push(RPNToken::Operator(op));
                     }
                     neg = false;
-                },
+                }
                 Some(tokop) => {
                     while {
                         if let Some(&qe) = stack.last() {
@@ -60,7 +60,7 @@ pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken
                 None => return Err(String::from("Invalid operator")),
             }
         };
-    };
+    }
 
     if !num.is_empty() {
         let n = match num.parse::<T>() {

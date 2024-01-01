@@ -20,9 +20,7 @@ fn repl() {
         print!("> ");
         std::io::stdout().flush().expect("Can't flush stdout.");
         let mut buffer = String::new();
-            input_lock
-                .read_line(&mut buffer)
-                .expect("Can't read line.");
+        input_lock.read_line(&mut buffer).expect("Can't read line.");
         let v = shunting_yard::evaluate::<f64>(&buffer).expect("Invalid input.");
         println!(">>> {}", v);
         buffer.clear();

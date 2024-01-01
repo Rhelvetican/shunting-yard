@@ -14,33 +14,29 @@ pub enum Operator {
     DIVIDE,
     POWER,
     LPAREN,
-    RPAREN
+    RPAREN,
 }
 
 impl Operator {
     pub fn val(&self) -> u32 {
         match *self {
-            Operator::LPAREN
-            | Operator::RPAREN => 0,
-            Operator::PLUS
-            | Operator::MINUS => 1,
-            Operator::MULTI
-            | Operator::DIVIDE => 2,
+            Operator::LPAREN | Operator::RPAREN => 0,
+            Operator::PLUS | Operator::MINUS => 1,
+            Operator::MULTI | Operator::DIVIDE => 2,
             Operator::POWER => 3,
         }
     }
 
     pub fn try_from_char(c: char) -> Option<Operator> {
-            Some(match c {
-                '+' => Operator::PLUS,
-                '-' => Operator::MINUS,
-                '*' => Operator::MULTI,
-                '/' => Operator::DIVIDE,
-                '^' => Operator::POWER,
-                '(' => Operator::LPAREN,
-                ')' => Operator::RPAREN,
-                _ => return None,
-            }
-        )
+        Some(match c {
+            '+' => Operator::PLUS,
+            '-' => Operator::MINUS,
+            '*' => Operator::MULTI,
+            '/' => Operator::DIVIDE,
+            '^' => Operator::POWER,
+            '(' => Operator::LPAREN,
+            ')' => Operator::RPAREN,
+            _ => return None,
+        })
     }
 }
