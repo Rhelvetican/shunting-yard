@@ -61,7 +61,7 @@ pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken
                     stack.push(tokop);
                     neg = true;
                 }
-                None => return Err(String::from("Invalid operator")),
+                None => return Err(String::from("Invalid operator.")),
             }
         };
     }
