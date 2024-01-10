@@ -69,7 +69,7 @@ pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken
     if !num.is_empty() {
         let n = match num.parse::<T>() {
             Ok(n) => n,
-            Err(_) => return Err(String::from("Failed to parse number")),
+            Err(_) => return Err(String::from("Failed to parse number.")),
         };
         let rpnt = RPNToken::Operand(n);
         output.push(rpnt);
