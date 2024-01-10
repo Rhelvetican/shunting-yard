@@ -21,8 +21,11 @@ fn repl() {
         std::io::stdout().flush().expect("Can't flush stdout.");
         let mut buffer = String::new();
         input_lock.read_line(&mut buffer).expect("Can't read line.");
+        if buffer.trim() == "exit" {
+            break;
+        }
         let v = shunting_yard::evaluate::<f64>(&buffer).expect("Invalid input.");
-        println!(">>> {}", v);
+        println!(">> {}", v);
         buffer.clear();
     }
 }
