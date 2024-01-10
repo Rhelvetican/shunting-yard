@@ -38,6 +38,7 @@ impl Operator {
             '^' => Operator::POWER,
             '(' => Operator::LPAREN,
             ')' => Operator::RPAREN,
+            '!' => Operator::FACTORIAL,
             _ => return None,
         })
     }
