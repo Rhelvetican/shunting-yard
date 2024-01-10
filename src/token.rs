@@ -4,6 +4,7 @@ use num::Float;
 pub enum RPNToken<T: Float + Copy> {
     Operand(T),
     Operator(Operator),
+    Var(char)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]

@@ -1,6 +1,6 @@
-use crate::token::{Operator, RPNToken};
+use crate::{token::{Operator, RPNToken}, parser::parse_f64};
 use num::Float;
-use std::str::FromStr;
+use std::{str::FromStr, io::stdin};
 
 pub fn eval<T>(tokens: &[RPNToken<T>]) -> T
 where
@@ -38,6 +38,13 @@ where
                 stack.push(factorial(n));
             }
             RPNToken::Operand(n) => stack.push(n.clone()),
+            RPNToken::Var(x) => {
+                print!("Enter the value of {x}: ");
+                let mut buffer = String::new();
+                stdin().read_line(&mut buffer).expect("Failed to parse number.");
+                let n = buffer.parse::<f64>().unwrap();
+                stack.push(parse_f64(n));
+            }
         }
     }
 
@@ -52,7 +59,7 @@ fn pop_stack<T: Float + FromStr + Clone + Copy + Into<f64>>(stack: &mut Vec<T>) 
 
 fn factorial<T: Float + FromStr + Clone + Copy + Into<f64>>(n: T) -> T {
     let n = T::round(n);
-    if n == T::zero() {
+    if n >= T::zero() {
         T::one()
     } else {
         n * factorial(n - T::one())

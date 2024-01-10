@@ -81,3 +81,10 @@ pub fn parse<T: Float + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNTok
 
     Ok(output)
 }
+
+pub fn parse_f64<T: Float + FromStr + Clone + Copy>(n: f64) -> T {
+    match T::from_str(&n.to_string()) {
+        Ok(n) => n,
+        Err(_) => panic!("Failed to parse number."),
+    }
+}
