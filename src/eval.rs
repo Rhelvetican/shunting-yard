@@ -33,6 +33,10 @@ where
             RPNToken::Operator(Operator::LPAREN) | RPNToken::Operator(Operator::RPAREN) => {
                 panic!("Parenthesis should have been removed")
             }
+            RPNToken::Operator(Operator::FACTORIAL) => {
+                let n = stack.pop().unwrap();
+                stack.push(factorial(n));
+            }
             RPNToken::Operand(n) => stack.push(n.clone()),
         }
     }
@@ -44,4 +48,12 @@ fn pop_stack<T: Num + FromStr + Clone + Copy + Into<f64>>(stack: &mut Vec<T>) ->
     let n1 = stack.pop().unwrap();
     let n2 = stack.pop().unwrap();
     (n1, n2)
+}
+
+fn factorial<T: Num + FromStr + Clone + Copy + Into<f64>>(n: T) -> T {
+    if n == T::zero() {
+        T::one()
+    } else {
+        n * factorial(n - T::one())
+    }
 }

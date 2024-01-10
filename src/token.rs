@@ -13,6 +13,7 @@ pub enum Operator {
     MULTI,
     DIVIDE,
     POWER,
+    FACTORIAL,
     LPAREN,
     RPAREN,
 }
@@ -24,6 +25,7 @@ impl Operator {
             Operator::PLUS | Operator::MINUS => 1,
             Operator::MULTI | Operator::DIVIDE => 2,
             Operator::POWER => 3,
+            Operator::FACTORIAL => 4,
         }
     }
 
