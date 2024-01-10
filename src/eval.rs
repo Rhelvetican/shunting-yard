@@ -1,10 +1,10 @@
 use crate::token::{Operator, RPNToken};
-use num::Num;
+use num::Float;
 use std::str::FromStr;
 
 pub fn eval<T>(tokens: &[RPNToken<T>]) -> T
 where
-    T: Num + FromStr + Clone + Copy + Into<f64>,
+    T: Float + FromStr + Clone + Copy + Into<f64>,
 {
     let mut stack: Vec<T> = Vec::new();
     for t in tokens {
@@ -44,13 +44,14 @@ where
     stack.last().unwrap().clone()
 }
 
-fn pop_stack<T: Num + FromStr + Clone + Copy + Into<f64>>(stack: &mut Vec<T>) -> (T, T) {
+fn pop_stack<T: Float + FromStr + Clone + Copy + Into<f64>>(stack: &mut Vec<T>) -> (T, T) {
     let n1 = stack.pop().unwrap();
     let n2 = stack.pop().unwrap();
     (n1, n2)
 }
 
-fn factorial<T: Num + FromStr + Clone + Copy + Into<f64>>(n: T) -> T {
+fn factorial<T: Float + FromStr + Clone + Copy + Into<f64>>(n: T) -> T {
+    let n = T::round(n);
     if n == T::zero() {
         T::one()
     } else {

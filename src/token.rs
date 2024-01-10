@@ -1,7 +1,7 @@
-use num::Num;
+use num::Float;
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-pub enum RPNToken<T: Num + Copy> {
+pub enum RPNToken<T: Float + Copy> {
     Operand(T),
     Operator(Operator),
 }
