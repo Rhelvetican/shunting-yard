@@ -44,6 +44,10 @@ pub fn parse<T: Num + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken
                     }
                     neg = false;
                 }
+                Some(Operator::FACTORIAL) => {
+                    output.push(RPNToken::Operator(Operator::FACTORIAL));
+                    neg = false;
+                }
                 Some(tokop) => {
                     while {
                         if let Some(&qe) = stack.last() {
