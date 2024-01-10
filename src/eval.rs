@@ -1,6 +1,9 @@
-use crate::{token::{Operator, RPNToken}, parser::parse_f64};
+use crate::{
+    parser::parse_f64,
+    token::{Operator, RPNToken},
+};
 use num::Float;
-use std::{str::FromStr, io::stdin};
+use std::{io::stdin, str::FromStr};
 
 pub fn eval<T>(tokens: &[RPNToken<T>]) -> T
 where
@@ -41,7 +44,9 @@ where
             RPNToken::Var(x) => {
                 print!("Enter the value of {x}: ");
                 let mut buffer = String::new();
-                stdin().read_line(&mut buffer).expect("Failed to parse number.");
+                stdin()
+                    .read_line(&mut buffer)
+                    .expect("Failed to parse number.");
                 let n = buffer.parse::<f64>().unwrap();
                 stack.push(parse_f64(n));
             }
