@@ -62,7 +62,7 @@ fn pop_stack<T: Float + FromStr + Clone + Copy + Into<f64>>(stack: &mut Vec<T>) 
 
 fn factorial<T: Float + FromStr + Clone + Copy + Into<f64>>(n: T) -> T {
     let n = T::round(n);
-    if n >= T::zero() {
+    if n <= T::zero() {
         T::one()
     } else {
         n * factorial(n - T::one())
