@@ -7,7 +7,8 @@ pub fn parse<T: Float + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNTok
     let mut output: Vec<RPNToken<T>> = Vec::new();
     let mut stack: Vec<Operator> = Vec::new();
     let mut num: String = String::new();
-    let mut neg = true;
+    let mut neg: bool = true;
+    let mut var: String = String::new();
 
     for tok in tokens {
         if tok.is_numeric() || tok == '.' {
