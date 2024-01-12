@@ -3,15 +3,22 @@ use crate::{
     token::{Operator, RPNToken},
 };
 use num::Float;
-use std::{io::stdin, str::FromStr};
+use std::{io::stdin, str::FromStr, fmt::Debug};
 
-pub fn eval<T>(tokens: &[RPNToken<T>]) -> T
+pub fn eval<T>(tokens: &[ RPNToken<T> ]) -> T
 where
-    T: Float + FromStr + Clone + Copy + Into<f64>,
+    T: Float + FromStr + Clone + Debug + Copy + Into<f64>,
 {
     let mut stack: Vec<T> = Vec::new();
     for t in tokens {
         match t {
+            RPNToken::Var(x) => {
+                print!("Enter the value of {}: ", x);
+                let mut varbuf = String::new();
+                stdin().read_line(&mut varbuf).expect("Can't read line.");
+                let v = varbuf.parse::<f64>().expect("Unable to parse number.");
+                stack.push(parse_f64(v));
+            }
             RPNToken::Operator(Operator::PLUS) => {
                 let n = pop_stack(&mut stack);
                 stack.push(n.1 + n.0);
@@ -41,15 +48,6 @@ where
                 stack.push(factorial(n));
             }
             RPNToken::Operand(n) => stack.push(n.clone()),
-            RPNToken::Var(x) => {
-                print!("Enter the value of {x}: ");
-                let mut buffer = String::new();
-                stdin()
-                    .read_line(&mut buffer)
-                    .expect("Failed to parse number.");
-                let n = buffer.parse::<f64>().unwrap();
-                stack.push(parse_f64(n));
-            }
         }
     }
 

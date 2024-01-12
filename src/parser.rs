@@ -1,14 +1,14 @@
 use crate::token::{Operator, RPNToken};
 use num::Float;
-use std::str::FromStr;
+use std::{str::FromStr, fmt::Debug};
 
-pub fn parse<T: Float + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken<T>>, String> {
+pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken<T>>, String> {
     let tokens = code.chars().filter(|c| !c.is_whitespace());
     let mut output: Vec<RPNToken<T>> = Vec::new();
     let mut stack: Vec<Operator> = Vec::new();
     let mut num: String = String::new();
     let mut neg: bool = true;
-    let mut var: String = String::new();
+    let mut var: char;
 
     for tok in tokens {
         if tok.is_numeric() || tok == '.' {
@@ -24,11 +24,18 @@ pub fn parse<T: Float + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNTok
             if !num.is_empty() {
                 let n = match num.parse::<T>() {
                     Ok(n) => n,
-                    Err(_) => return Err(String::from("Failed to parse number")),
+                    Err(_) => return Err(String::from("Failed to parse number.")),
                 };
-                let rpnt = RPNToken::Operand(n);
+                let rpnt: RPNToken<T> = RPNToken::Operand(n);
                 output.push(rpnt);
                 num.clear();
+            };
+
+            if tok.is_alphabetic() {
+                var = tok.clone();
+                let rpnt: RPNToken<T> = RPNToken::Var(var);
+                output.push(rpnt);
+                continue;
             };
 
             match Operator::try_from_char(tok) {
