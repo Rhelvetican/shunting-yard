@@ -7,7 +7,7 @@ pub mod token;
 use eval::eval;
 use num::Float;
 use parser::parse;
-use std::{str::FromStr, fmt::Debug};
+use std::{fmt::Debug, str::FromStr};
 
 pub fn evaluate<T>(code: &str) -> Result<T, String>
 where

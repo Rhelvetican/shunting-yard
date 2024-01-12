@@ -1,8 +1,10 @@
 use crate::token::{Operator, RPNToken};
 use num::Float;
-use std::{str::FromStr, fmt::Debug};
+use std::{fmt::Debug, str::FromStr};
 
-pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken<T>>, String> {
+pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(
+    code: &str,
+) -> Result<Vec<RPNToken<T>>, String> {
     let tokens = code.chars().filter(|c| !c.is_whitespace());
     let mut output: Vec<RPNToken<T>> = Vec::new();
     let mut stack: Vec<Operator> = Vec::new();

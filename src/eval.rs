@@ -2,11 +2,11 @@ use crate::{
     parser::parse_f64,
     token::{Operator, RPNToken},
 };
-use rprompt::prompt_reply;
 use num::Float;
-use std::{str::FromStr, fmt::Debug};
+use rprompt::prompt_reply;
+use std::{fmt::Debug, str::FromStr};
 
-pub fn eval<T>(tokens: &[ RPNToken<T> ]) -> T
+pub fn eval<T>(tokens: &[RPNToken<T>]) -> T
 where
     T: Float + FromStr + Clone + Debug + Copy + Into<f64>,
 {
