@@ -2,8 +2,9 @@ use crate::{
     parser::parse_f64,
     token::{Operator, RPNToken},
 };
+use rprompt::prompt_reply;
 use num::Float;
-use std::{io::stdin, str::FromStr, fmt::Debug};
+use std::{str::FromStr, fmt::Debug};
 
 pub fn eval<T>(tokens: &[ RPNToken<T> ]) -> T
 where
@@ -13,9 +14,7 @@ where
     for t in tokens {
         match t {
             RPNToken::Var(x) => {
-                print!("Enter the value of {}: ", x);
-                let mut varbuf = String::new();
-                stdin().read_line(&mut varbuf).expect("Can't read line.");
+                let varbuf = prompt_reply(format!("Enter the value of {}: ", x)).unwrap();
                 let v = varbuf.parse::<f64>().expect("Unable to parse number.");
                 stack.push(parse_f64(v));
             }

@@ -10,6 +10,7 @@ description = "A simple shunting yard algorithm implementation in Rust"
 
 [dependencies]
 num = "*"
+rprompt = "*"
 
 [[bin]]
 doc = false
