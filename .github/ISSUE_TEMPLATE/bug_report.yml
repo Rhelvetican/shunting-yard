@@ -1,0 +1,43 @@
+name: Bug Report
+title: '[bug] '
+description: Create a report to help me improve.
+labels: ['type: bug', 'status: needs triage']
+
+body:
+	- type: markdown
+		attributes:
+			value: |
+			1. Please search for [existing issues](https://github.com/Rhelvetican/shunting-yard/issues?q=is%3Aissue) about this problem first.
+			2. Make sure `rustc` and your toolchains are up to date.
+	
+	- type: textarea
+		id: reproduction
+		attributes:
+			label: Reproduction Steps
+			description: |
+				Please provide a minimal reproduction of the problem.
+				Include a code sample, configuration, and command to reproduce the problem.
+			placeholder: |
+				Please provide a minimal reproduction of the problem.
+				Include a code sample, configuration, and command to reproduce the problem.
+
+	- type: textarea
+		id: expected-behavior
+		attributes:
+			label: Expected Behavior
+			description: |
+				Please describe the behavior you are expecting.
+
+	- type: textarea
+		id: actual-behavior
+		attributes:
+			label: Actual Behavior
+			description: |
+				Please describe the behavior you are seeing.
+
+	- type: textarea
+		id: details
+		attributes:
+			label: Details
+			description: |
+				Please provide any additional details here, like your toolchain version, operating system, and so on.
