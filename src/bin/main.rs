@@ -29,7 +29,7 @@ fn repl() -> Result<()> {
         if buffer.trim() == "exit" {
             break;
         }
-        let v = shunting_yard::evaluate::<f64>(&buffer).expect("Invalid input");
+        let v = shunting_yard::evaluate::<f64>(&buffer)?;
         buffer.clear();
         println!(">>> {}", v);
     }
