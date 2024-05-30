@@ -21,11 +21,11 @@ fn main() -> Result<()> {
 fn repl() -> Result<()> {
     let input = stdin();
     let mut input_lock = input.lock();
+    let mut buffer = String::new();
     loop {
         print!("> ");
         stdout().flush()?;
-        let mut buffer = String::new();
-        input_lock.read_line(&mut buffer).expect("Can't read line.");
+        input_lock.read_line(&mut buffer)?;
         if buffer.trim() == "exit" {
             break;
         }
