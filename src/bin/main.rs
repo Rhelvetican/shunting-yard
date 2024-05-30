@@ -1,24 +1,29 @@
 extern crate shunting_yard;
 
-use std::env;
-use std::io::prelude::*;
+use anyhow::Result;
+use shunting_yard::evaluate;
+use std::{
+    env::args,
+    io::{prelude::*, stdin, stdout},
+};
 
-fn main() {
-    let inp = env::args().collect::<Vec<String>>();
+fn main() -> Result<()> {
+    let inp = args().collect::<Vec<String>>();
     if inp.len() >= 2 {
-        let v = shunting_yard::evaluate::<f64>(inp.last().unwrap()).expect("Invalid input.");
+        let v = evaluate::<f64>(inp.last().unwrap())?;
         println!("{}", v);
     } else {
-        repl();
+        repl()?;
     };
+    Ok(())
 }
 
-fn repl() {
-    let input = std::io::stdin();
+fn repl() -> Result<()> {
+    let input = stdin();
     let mut input_lock = input.lock();
     loop {
         print!("> ");
-        std::io::stdout().flush().expect("Can't flush stdout.");
+        stdout().flush()?;
         let mut buffer = String::new();
         input_lock.read_line(&mut buffer).expect("Can't read line.");
         if buffer.trim() == "exit" {
@@ -28,4 +33,5 @@ fn repl() {
         buffer.clear();
         println!(">>> {}", v);
     }
+    Ok(())
 }
