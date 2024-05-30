@@ -1,16 +1,17 @@
 [package]
 name = "shunting-yard"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
-authors = ["Hoang Trung Kien"]
+authors = ["Rhelv"]
 license = "MIT"
 description = "A simple shunting yard algorithm implementation in Rust"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-num = "*"
-rprompt = "*"
+num = "0"
+rprompt = "2"
+anyhow = "1"
 
 [[bin]]
 doc = false
@@ -19,7 +20,7 @@ path = "src/bin/main.rs"
 
 [profile.release]
 opt-level = 3
-lto = "thin"
+lto = "fat"
 strip = true
 codegen-units = 1
-panic = "abort"
+rpath = true

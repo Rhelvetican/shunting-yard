@@ -1,10 +1,9 @@
 use crate::token::{Operator, RPNToken};
+use anyhow::{anyhow, Result};
 use num::Float;
 use std::{fmt::Debug, str::FromStr};
 
-pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(
-    code: &str,
-) -> Result<Vec<RPNToken<T>>, String> {
+pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(code: &str) -> Result<Vec<RPNToken<T>>> {
     let tokens = code.chars().filter(|c| !c.is_whitespace());
     let mut output: Vec<RPNToken<T>> = Vec::new();
     let mut stack: Vec<Operator> = Vec::new();
@@ -26,7 +25,7 @@ pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(
             if !num.is_empty() {
                 let n = match num.parse::<T>() {
                     Ok(n) => n,
-                    Err(_) => return Err(String::from("Failed to parse number.")),
+                    Err(_) => return Err(anyhow!("Failed to parse number.")),
                 };
                 let rpnt: RPNToken<T> = RPNToken::Operand(n);
                 output.push(rpnt);
@@ -34,7 +33,7 @@ pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(
             };
 
             if tok.is_alphabetic() {
-                var = tok.clone();
+                var = tok;
                 let rpnt: RPNToken<T> = RPNToken::Var(var);
                 output.push(rpnt);
                 continue;
@@ -71,7 +70,7 @@ pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(
                     stack.push(tokop);
                     neg = true;
                 }
-                None => return Err(String::from("Invalid operator.")),
+                None => return Err(anyhow!("Invalid operator.")),
             }
         };
     }
@@ -79,7 +78,7 @@ pub fn parse<T: Float + Debug + FromStr + Clone + Copy>(
     if !num.is_empty() {
         let n = match num.parse::<T>() {
             Ok(n) => n,
-            Err(_) => return Err(String::from("Failed to parse number.")),
+            Err(_) => return Err(anyhow!("Failed to parse number.")),
         };
         let rpnt = RPNToken::Operand(n);
         output.push(rpnt);

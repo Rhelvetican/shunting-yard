@@ -2,11 +2,12 @@ use crate::{
     parser::parse_f64,
     token::{Operator, RPNToken},
 };
+use anyhow::Result;
 use num::Float;
 use rprompt::prompt_reply;
 use std::{fmt::Debug, str::FromStr};
 
-pub fn eval<T>(tokens: &[RPNToken<T>]) -> T
+pub fn eval<T>(tokens: &[RPNToken<T>]) -> Result<T>
 where
     T: Float + FromStr + Clone + Debug + Copy + Into<f64>,
 {
@@ -15,7 +16,7 @@ where
         match t {
             RPNToken::Var(x) => {
                 let varbuf = prompt_reply(format!("Enter the value of {}: ", x)).unwrap();
-                let v = varbuf.parse::<f64>().expect("Unable to parse number.");
+                let v = varbuf.parse::<f64>()?;
                 stack.push(parse_f64(v));
             }
             RPNToken::Operator(Operator::PLUS) => {
@@ -46,11 +47,11 @@ where
                 let n = stack.pop().unwrap();
                 stack.push(factorial(n));
             }
-            RPNToken::Operand(n) => stack.push(n.clone()),
+            RPNToken::Operand(n) => stack.push(*n),
         }
     }
 
-    stack.last().unwrap().clone()
+    Ok(*stack.last().unwrap())
 }
 
 fn pop_stack<T: Float + FromStr + Clone + Copy + Into<f64>>(stack: &mut Vec<T>) -> (T, T) {
