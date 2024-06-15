@@ -1,5 +1,3 @@
-extern crate shunting_yard;
-
 use anyhow::Result;
 use shunting_yard::evaluate;
 use std::{
